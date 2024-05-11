@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Slot} from "expo-router";
+import { Slot, Stack} from "expo-router";
 import { Chat, OverlayProvider } from 'stream-chat-expo';
 import { StreamChat } from "stream-chat";
 
@@ -25,7 +25,9 @@ const HomeLayout = () => {
   return (
     <OverlayProvider>
       <Chat client={client}>
-        <Slot />
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
+        </Stack>
       </Chat>
     </OverlayProvider>
     // <Slot/>

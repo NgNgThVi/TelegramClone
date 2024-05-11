@@ -8,6 +8,7 @@ import {
   MessageList,
   useChatContext,
 } from "stream-chat-expo";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ChannelScreen = () => {
   const [channel, setChannel] = useState<ChannleType | null>(null);
@@ -26,7 +27,9 @@ const ChannelScreen = () => {
   return (
     <Channel channel={channel}>
       <MessageList />
-      <MessageInput />
+      <SafeAreaView edges={["bottom"]}>
+        <MessageInput />
+      </SafeAreaView>
     </Channel>
   );
 };
