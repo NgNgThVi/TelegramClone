@@ -1,37 +1,19 @@
-import React, { useEffect } from "react";
-import { Slot, Stack} from "expo-router";
-import { Chat, OverlayProvider } from 'stream-chat-expo';
-import { StreamChat } from "stream-chat";
+import { Redirect, Stack } from 'expo-router';
+import ChatProvider from '../../providers/ChatProvider';
+import { useAuth } from '../../providers/AuthProvider';
 
+export default function HomeLayout() {
+  const { user } = useAuth();
 
-
-const client = StreamChat.getInstance("t94f95byweya");
-
-const HomeLayout = () => {
-  useEffect(() => {
-    const connect = async () => {
-      await client.connectUser(
-        {
-          id: "jlahey",
-          name: "Jim Lahey",
-          image: "https://i.imgur.com/fR9Jz14.png",
-        },
-        client.devToken("jlahey")
-      );
-    };
-    connect();
-  });
+  if (!user) {
+    return <Redirect href="/(auth)/login" />;
+  }
 
   return (
-    <OverlayProvider>
-      <Chat client={client}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
-        </Stack>
-      </Chat>
-    </OverlayProvider>
-    // <Slot/>
+    <ChatProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </ChatProvider>
   );
-};
-
-export default HomeLayout;
+}
